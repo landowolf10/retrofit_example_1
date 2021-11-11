@@ -14,7 +14,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
-    private var items: MutableList<Repo> = ArrayList()
     private lateinit var itemAdapter: RecyclerAdapter
     private lateinit var recyclerView: RecyclerView
 
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        itemAdapter = RecyclerAdapter(items)
+        itemAdapter = RecyclerAdapter()
         initRecycler(itemAdapter)
 
         val retrofit = Retrofit.Builder()
@@ -46,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
     }
 
     private fun initRecycler(noteAdapter:RecyclerAdapter)

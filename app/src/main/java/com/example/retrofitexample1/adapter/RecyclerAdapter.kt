@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitexample1.R
 import com.example.retrofitexample1.model.Repo
-import java.util.zip.Inflater
 
-class RecyclerAdapter(private var items: MutableList<Repo>):RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()
+class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()
 {
+    private var repos: List<Repo> = ArrayList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.card_view,
@@ -22,16 +24,16 @@ class RecyclerAdapter(private var items: MutableList<Repo>):RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.render(items[position])
+        holder.render(repos[position])
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return repos.size
     }
 
     fun setNamesList(items: MutableList<Repo>)
     {
-        this.items = items
+        this.repos = items
         notifyDataSetChanged()
     }
 
@@ -44,6 +46,13 @@ class RecyclerAdapter(private var items: MutableList<Repo>):RecyclerView.Adapter
 
             projectID.text = item.id.toString()
             projectName.text = item.name
+
+            itemView.setOnClickListener {
+                val  position: Int = adapterPosition
+
+                Toast.makeText(itemView.context, "REPO id: ${item.id}, Repo name: " +
+                        "${item.name}, Repo position: ${position + 1}", Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
