@@ -2,6 +2,7 @@ package com.example.retrofitexample1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitexample1.adapter.RecyclerAdapter
@@ -39,10 +40,17 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<MutableList<Repo>>, response: Response<MutableList<Repo>>) {
-                response.body()?.let {
-                    repos -> (recyclerView.adapter as RecyclerAdapter).setNamesList(repos)
-                    print(repos)
+                if(response.isSuccessful)
+                {
+                    print(response.body())
+
+                    response.body()?.let {
+                            repos -> (recyclerView.adapter as RecyclerAdapter).setNamesList(repos)
+                    }
                 }
+                else
+                    Toast.makeText(this@MainActivity, response.message(), Toast.LENGTH_LONG).
+                        show()
             }
         })
     }
